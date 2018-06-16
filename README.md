@@ -11,19 +11,19 @@ In your eloquent model use `\Shridhar\EloquentFiles\HasFile` trait and create a 
 
 <pre>
 
-	&lt;?php
+&lt;?php
 
-	namespace App\Model;
+namespace App\Model;
 
-	use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
-	class Member extends Model {
+class Member extends Model {
 
 	use \Shridhar\EloquentFiles\HasFile;
 
 	function getImageAttribute() {
-	return $this->file_info("image_path");
-}
+		return $this->file_info("image_path");
+	}
 
 }
 
