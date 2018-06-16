@@ -1,0 +1,16 @@
+{
+    "name": "shridhar/laravel-eloquent-files",
+    "description": "File Handling with Eloquent Models in Laravel",
+    "type": "library",
+    "require": {
+        "laravel/framework": "^5.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shridhar Sharma",
+            "email": "shridharkaushik29@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
