@@ -1,5 +1,5 @@
 {
-    "name": "shridhar/laravel-eloquent-files",
+    "name": "shridharkaushik29/laravel-eloquent-files",
     "description": "File Handling with Eloquent Models in Laravel",
     "type": "library",
     "require": {
@@ -12,5 +12,10 @@
             "email": "shridharkaushik29@gmail.com"
         }
     ],
+    "autoload": {
+    	"psr-4": {
+			"Shridhar\\EloquentFiles\\": "src/"
+    	}
+    },
     "minimum-stability": "stable"
 }
