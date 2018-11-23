@@ -8,19 +8,19 @@ use Illuminate\Database\QueryException;
 class File extends Model {
 
     protected
-            $guarded = [],
-            $appends = [
-                'exists',
-                'url',
-                'file_path',
-                'extension',
-                'type'
-                    ],
-            $hidden = [
-                "disk",
-                "attribute_name",
-                "model",
-                "options"
+        $guarded = [],
+        $appends = [
+        'exists',
+        'url',
+        'file_path',
+        'extension',
+        'type'
+    ],
+        $hidden = [
+        "disk",
+        "attribute_name",
+        "model",
+        "options"
     ];
 
     public function exists() {
@@ -101,13 +101,18 @@ class File extends Model {
         return $this->upload($file);
     }
 
+    public function deleteFile() {
+        $this->disk->delete($this->path);
+        return $this;
+    }
+
     public function delete() {
+
+        $this->deleteFile();
 
         $this->model->{$this->attribute_name} = null;
 
         $this->model->save();
-
-        $this->disk->delete($this->path);
 
         return $this;
     }
