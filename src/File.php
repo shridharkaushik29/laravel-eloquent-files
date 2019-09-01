@@ -25,13 +25,15 @@ use League\Flysystem\FileNotFoundException;
 class File extends Model {
 
     protected
+
         $guarded = [],
+
         $appends = [
-        'exists',
         'url',
         'file_path',
         'extension',
-        'type'
+        'type',
+        'exists'
     ],
         $hidden = [
         "disk",
@@ -62,12 +64,12 @@ class File extends Model {
      * @return mixed|string|null
      */
     public function getUrlAttribute() {
-        $exists = $this->exists;
         $options = $this->options;
 
         $default_url = Arr::get($options, "default_url");
         $default_asset = Arr::get($options, "default_asset");
-        if ($exists) {
+
+        if ($this->path) {
             $url = $this->disk->url($this->path);
         } elseif ($default_url) {
             $url = $default_url;
@@ -84,8 +86,7 @@ class File extends Model {
      * @return string
      */
     public function getFilePathAttribute() {
-        $path = $this->path;
-        return $this->disk->getAdapter()->getPathPrefix() . $path;
+        return $this->disk->getAdapter()->getPathPrefix() . $this->path;
     }
 
     /**
@@ -95,10 +96,16 @@ class File extends Model {
     public function getTypeAttribute() {
         if ($this->exists) {
             return $this->disk->getMimetype($this->path);
+        } else {
+            return "";
         }
-        return "";
     }
 
+    /**
+     * @param $file
+     * @param null $name
+     * @return $this
+     */
     public function upload($file, $name = null) {
 
         if ($file) {
@@ -137,11 +144,17 @@ class File extends Model {
         return $this->upload($file);
     }
 
+    /**
+     * @return $this
+     */
     public function deleteFile() {
         $this->disk->delete($this->path);
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function delete() {
 
         $this->deleteFile();
