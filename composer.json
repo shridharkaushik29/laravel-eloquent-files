@@ -1,21 +1,21 @@
 {
-    "name": "shridharkaushik29/laravel-eloquent-files",
-    "description": "File Handling with Eloquent Models in Laravel",
-    "type": "library",
-    "require": {
-        "laravel/framework": "^5.4"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Shridhar Sharma",
-            "email": "shridharkaushik29@gmail.com"
-        }
-    ],
-    "autoload": {
-    	"psr-4": {
-			"Shridhar\\EloquentFiles\\": "src/"
-    	}
-    },
-    "minimum-stability": "stable"
+  "name": "shridharkaushik29/laravel-eloquent-files",
+  "description": "File Handling with Eloquent Models in Laravel",
+  "type": "library",
+  "require": {
+    "laravel/framework": "5.8.*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Shridhar Sharma",
+      "email": "shridharkaushik29@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Shridhar\\EloquentFiles\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
 }

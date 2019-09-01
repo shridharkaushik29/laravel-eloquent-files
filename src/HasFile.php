@@ -9,17 +9,20 @@
 namespace Shridhar\EloquentFiles;
 
 use Illuminate\Support\Facades\Storage;
-use Shridhar\EloquentFiles\File as FileModel;
 
 /**
- *
  * @author Shridhar
  */
 trait HasFile {
 
+    /**
+     * @param string $attribute_name
+     * @param array $options
+     * @return File
+     */
     function file_info($attribute_name = "file_path", $options = []) {
 
-        $file = new FileModel([
+        $file = new File([
             "path" => $this->{$attribute_name},
             "attribute_name" => $attribute_name,
             "disk" => $this->files_disk(),
@@ -30,6 +33,9 @@ trait HasFile {
         return $file;
     }
 
+    /**
+     * @return \Illuminate\Contracts\Filesystem\Filesystem
+     */
     function files_disk() {
         if (isset(static::$files_disk)) {
             $disk_name = static::$files_disk;
@@ -37,12 +43,6 @@ trait HasFile {
             $disk_name = "public";
         }
         return Storage::disk($disk_name);
-    }
-
-    static function deleteFileOnModelDelete($attribute_name = "file_path") {
-        static::deleted(function($model) use($attribute_name) {
-            $model->file_delete($attribute_name);
-        });
     }
 
 }

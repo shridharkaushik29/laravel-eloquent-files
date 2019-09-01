@@ -2,9 +2,26 @@
 
 namespace Shridhar\EloquentFiles;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Http\File as HttpFile;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use League\Flysystem\FileNotFoundException;
 
+/**
+ * @property string path
+ * @property string file_path
+ * @property string url
+ * @property string exists
+ * @property string attribute_name
+ * @property array options
+ * @property Model model
+ * @property FilesystemAdapter disk
+ */
 class File extends Model {
 
     protected
@@ -23,27 +40,33 @@ class File extends Model {
         "options"
     ];
 
-    public function exists() {
+    /**
+     * @return bool
+     */
+    public function getExistsAttribute() {
         return $this->disk->exists($this->path);
     }
 
-    public function getExistsAttribute() {
-        return $this->exists();
-    }
-
+    /**
+     * @return string
+     */
     public function getExtensionAttribute() {
         if ($this->path) {
             $extension = pathinfo($this->path, PATHINFO_EXTENSION);
             return $extension;
         }
+        return "";
     }
 
+    /**
+     * @return mixed|string|null
+     */
     public function getUrlAttribute() {
-        $exists = $this->exists();
+        $exists = $this->exists;
         $options = $this->options;
 
-        $default_url = array_get($options, "default_url");
-        $default_asset = array_get($options, "default_asset");
+        $default_url = Arr::get($options, "default_url");
+        $default_asset = Arr::get($options, "default_asset");
         if ($exists) {
             $url = $this->disk->url($this->path);
         } elseif ($default_url) {
@@ -57,15 +80,23 @@ class File extends Model {
         return $url;
     }
 
+    /**
+     * @return string
+     */
     public function getFilePathAttribute() {
         $path = $this->path;
         return $this->disk->getAdapter()->getPathPrefix() . $path;
     }
 
+    /**
+     * @return string
+     * @throws FileNotFoundException
+     */
     public function getTypeAttribute() {
-        if ($this->exists()) {
+        if ($this->exists) {
             return $this->disk->getMimetype($this->path);
         }
+        return "";
     }
 
     public function upload($file, $name = null) {
@@ -93,10 +124,15 @@ class File extends Model {
         return $this;
     }
 
+    /**
+     * @param HttpFile|UploadedFile $file
+     * @return File
+     * @throws Exception
+     */
     public function uploadImage($file) {
         $mime = $file->getMimeType();
-        if (!starts_with($mime, "image")) {
-            throw new \Exception("Uploaded file is not an image.");
+        if (!Str::startsWith($mime, "image")) {
+            throw new Exception("Uploaded file is not an image.");
         }
         return $this->upload($file);
     }
