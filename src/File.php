@@ -8,8 +8,6 @@ use Illuminate\Database\QueryException;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use League\Flysystem\FileNotFoundException;
 
 /**
@@ -66,8 +64,8 @@ class File extends Model {
     public function getUrlAttribute() {
         $options = $this->options;
 
-        $default_url = Arr::get($options, "default_url");
-        $default_asset = Arr::get($options, "default_asset");
+        $default_url = array_get($options, "default_url");
+        $default_asset = array_get($options, "default_asset");
 
         if ($this->path) {
             $url = $this->disk->url($this->path);
@@ -138,7 +136,7 @@ class File extends Model {
      */
     public function uploadImage($file) {
         $mime = $file->getMimeType();
-        if (!Str::startsWith($mime, "image")) {
+        if (!starts_with($mime, "image")) {
             throw new Exception("Uploaded file is not an image.");
         }
         return $this->upload($file);
