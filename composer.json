@@ -3,7 +3,7 @@
   "description": "File Handling with Eloquent Models in Laravel",
   "type": "library",
   "require": {
-    "laravel/framework": "6.0.*"
+    "laravel/framework": "6.x-dev"
   },
   "license": "MIT",
   "authors": [
