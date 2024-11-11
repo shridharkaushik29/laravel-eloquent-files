@@ -44,7 +44,7 @@ class File extends Model {
      * @return bool
      */
     public function getExistsAttribute() {
-        return $this->disk->exists($this->path);
+        return $this->path && $this->disk->exists($this->path);
     }
 
     /**
