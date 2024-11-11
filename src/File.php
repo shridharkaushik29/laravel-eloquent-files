@@ -3,6 +3,7 @@
 namespace Shridhar\EloquentFiles;
 
 use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -10,11 +11,9 @@ use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use League\Flysystem\FileNotFoundException;
 
 /**
  * @property string path
- * @property string file_path
  * @property string url
  * @property string exists
  * @property string attribute_name
@@ -80,13 +79,6 @@ class File extends Model {
         }
 
         return $url;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFilePathAttribute() {
-        return $this->disk->getAdapter()->getPathPrefix() . $this->path;
     }
 
     /**
