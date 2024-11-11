@@ -20,7 +20,7 @@ trait HasFile {
      * @param array $options
      * @return File
      */
-    function file_info($attribute_name = "file_path", $options = []) {
+    function file_info($attribute_name, $options = []) {
 
         $file = new File([
             "path" => $this->{$attribute_name},

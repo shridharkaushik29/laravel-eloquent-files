@@ -29,7 +29,6 @@ class File extends Model {
 
         $appends = [
         'url',
-        'file_path',
         'extension',
         'type',
         'exists'

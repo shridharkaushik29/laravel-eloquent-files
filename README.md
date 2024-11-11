@@ -29,7 +29,7 @@ class Member extends Model {
 
 </pre>
 
-Here `"image_path"` is the attribute/column name on which you want to assign the path of the uploaded file, default is "file_path".
+Here `"image_path"` is the attribute/column name on which you want to assign the path of the uploaded file.
 
 The second argument accepted by the `file_info()` method is the array of the following options.
 
